@@ -2,6 +2,8 @@
 
 This repository contains an example API, build using the FastAPI framework.
 
+The code within this repository is written using 3.6/7/8/9 syntax - the syntax can change slightly for FastAPI from Python 3.10 onwards.
+
 ## Getting started
 
 You can run the API yourself by:
