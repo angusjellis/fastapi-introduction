@@ -2,16 +2,18 @@
 
 This repository contains an example API, build using the FastAPI framework.
 
+## Getting started
+
 You can run the API yourself by:
 
-## Installing all requirements
+###  Installing all requirements
 ```bash
 python3 -m venv venv
 source ./venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-## Running the application
+### Running the application
 ```bash
 uvicorn main:app --reload
 ```
