@@ -20,6 +20,18 @@ pip3 install -r requirements.txt
 uvicorn main:app --reload
 ```
 
+The API docs can then be accessed at:
+
+```
+http://127.0.0.1:8000/docs
+```
+
+or...
+
+```
+http://127.0.0.1:8000/redoc
+```
+
 ## Benefits of FastAPI
 
 Aside from performance benefits, a major benefit of using FastAPI for your APIs is a lot of the 'grunt work' is handled automatically.
