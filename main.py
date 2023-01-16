@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Union
 
 from fastapi import FastAPI
 
@@ -18,12 +19,15 @@ app = FastAPI()
 async def root():
     return {"message": "Hello World"}
 
-items = [{"foo": "The Foo Wrestlers"}, {"bar": "The Bar Fighters"}, {"baz": "The Baz Fighters"}]
+fake_items_db = [{"foo": "The Foo Wrestlers"}, {"bar": "The Bar Fighters"}, {"baz": "The Baz Fighters"}]
 
 @app.get("/items")
 # API endpoints get documented automatically.
-async def read_items(items: list = items):
-    return {"message": items}
+# Function parameters that are not part of the path parameters are automatically converted to query parameters.
+# If you declare a default value for a parameter, it will be optional.
+# If you declare a type hint for a parameter, it will be converted to that type.
+async def read_items(skip: int = 0, limit: int = 10):
+    return fake_items_db[skip : skip + limit]
 
 @app.get("/items/{item_id}")
 # type hints automatically convert the path parameter to the correct type.
