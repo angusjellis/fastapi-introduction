@@ -30,11 +30,17 @@ async def read_items(skip: int = 0, limit: int = 10):
     return fake_items_db[skip : skip + limit]
 
 @app.get("/items/{item_id}")
-# type hints automatically convert the path parameter to the correct type.
-# if you pass in a stringified number (such as "3"), it will convert it to an int.
-# if you pass in a string that cannot be converted (such as "three"), it will raise a 422 error.
-async def read_item(item_id: int):
-    return {"item_id": item_id}
+# Optional query params can be defined using the Union type with a None default.
+# Bool types are automatically converted to true/false.
+async def read_item(item_id: str, q: Union[str, None] = None, short: bool = False):
+    item = {"item_id": item_id}
+    if q:
+        item.update({"q": q})
+    if not short:
+        item.update(
+            {"description": "This is an amazing item that has a long description"}
+        )
+    return item
 
 
 
@@ -49,3 +55,18 @@ async def get_model(model_name: ModelName):
         return {"model_name": model_name, "message": "LeCNN all the images"}
 
     return {"model_name": model_name, "message": "Have some residuals"}
+
+@app.get("/users/{user_id}/items/{item_id}")
+# You can declare multiple path/query parameters at once, and FastAPI knows which is which.
+# They do not need to be declared in any specific order.
+async def read_user_item(
+    user_id: int, item_id: str, q: Union[str, None] = None, short: bool = False
+):
+    item = {"item_id": item_id, "owner_id": user_id}
+    if q:
+        item.update({"q": q})
+    if not short:
+        item.update(
+            {"description": "This is an amazing item that has a long description"}
+        )
+    return item
