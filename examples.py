@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Union
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 
 # These are all machine learning models.
 # This class is inherited from the Enum class.
@@ -70,3 +70,40 @@ async def read_user_item(
             {"description": "This is an amazing item that has a long description"}
         )
     return item
+
+# We can use the Query class to declare additional information about a query parameter.
+# This is useful for documentation.
+# We can also use the Query class to declare validation constraints.
+# For example, we can declare a maximum length of 50 characters, and a minimum length of 3 characters.
+# We can also declare a regex pattern that the query parameter must match.
+# But this is probably overkill.
+
+async def find_more_items(q: Union[str, None] = Query(default=None, min_length = 3, max_length=50, regex="^fixedquery$")):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        results.update({"q": q})
+    return results
+
+# We can also declare a query parameter that is required.
+# We can do this by declaring a Query parameter, where the only type is a string.
+async def find_more_items_required_value(q: str = Query(min_length=3)):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        results.update({"q": q})
+    return results
+
+# We can use an ellipsis to declare a required query parameter without a default value.
+# An ellipsis is the same as typing ... in Python.
+async def find_more_items_required_elipisis(q: str = Query(default=..., min_length=3)):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        results.update({"q": q})
+    return results
+
+# We can even use elipses to declare a query parameter that is required, but where None is a valid value.
+# A user of the API would need to explicitly pass None as the value for the query parameter.
+async def find_items_none_required(q: Union[str, None] = Query(default=..., min_length=3)):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        results.update({"q": q})
+    return results
