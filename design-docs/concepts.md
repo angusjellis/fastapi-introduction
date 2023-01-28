@@ -21,3 +21,7 @@ We will start off as a purely internal facing website. But with a view to showin
 MINIMUM VIABLE PRODUCT
 
 A website that shows all sales for the business.
+
+At first, we do not care about any of the filtering, etc.
+
+We just want to be able to register, login, and see all the sales.
