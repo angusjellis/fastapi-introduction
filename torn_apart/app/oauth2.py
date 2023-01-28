@@ -40,9 +40,13 @@ def require_user(db: Session = Depends(get_db), Authorize: AuthJWT = Depends()):
         Authorize.jwt_required()
         user_id = Authorize.get_jwt_subject()
         user = db.query(models.User).filter(models.User.id == user_id).first()
-
+        
+        # NOTE: there may be valid use cases for users not existing in the database
+        # For example, services that use JWTs to authenticate users, but don't store
+        # user data in the database. In this case, you can remove the following
+        # exception and the UserNotFound class.
         if not user:
-            raise UserNotFound('User no longer exist')
+            raise UserNotFound('User not found in database')
 
     except Exception as e:
         error = e.__class__.__name__

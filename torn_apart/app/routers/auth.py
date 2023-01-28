@@ -90,7 +90,7 @@ def refresh_token(response: Response, request: Request, Authorize: AuthJWT = Dep
         user = db.query(models.User).filter(models.User.id == user_id).first()
         if not user:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                                detail='The user belonging to this token no logger exist')
+                                detail='The user belonging to this token no longer exists')
         access_token = Authorize.create_access_token(
             subject=str(user.id), expires_time=timedelta(minutes=ACCESS_TOKEN_EXPIRES_IN))
     except Exception as e:
