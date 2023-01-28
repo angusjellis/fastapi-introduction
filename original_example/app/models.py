@@ -37,4 +37,3 @@ class Post(Base):
     updated_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text("now()"))
     user = relationship('User')
-

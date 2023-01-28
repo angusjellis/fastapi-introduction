@@ -58,13 +58,11 @@ class PostResponse(PostBaseSchema):
 
 
 class UpdatePostSchema(BaseModel):
-    title: str
-    content: str
-    category: str
-    image: str
+    title: Union[str ,None]
+    content: Union[str, None]
+    category: Union[str, None]
+    image: Union[str ,None]
     user_id: Union[uuid.UUID, None]
-    created_at: Union[datetime , None]
-    updated_at: Union[datetime, None]
 
     class Config:
         orm_mode = True
@@ -74,5 +72,3 @@ class ListPostResponse(BaseModel):
     status: str
     results: int
     posts: List[PostResponse]
-
-
