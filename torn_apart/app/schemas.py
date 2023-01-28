@@ -17,7 +17,6 @@ class CreateUserSchema(UserBaseSchema):
     password: constr(min_length=8)
     passwordConfirm: str
     role: str = 'user'
-    verified: bool = False
 
 
 class LoginUserSchema(BaseModel):

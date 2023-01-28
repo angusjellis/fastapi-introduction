@@ -28,8 +28,7 @@ def get_config():
     return Settings()
 
 
-class NotVerified(Exception):
-    pass
+
 
 
 class UserNotFound(Exception):
@@ -45,9 +44,6 @@ def require_user(db: Session = Depends(get_db), Authorize: AuthJWT = Depends()):
         if not user:
             raise UserNotFound('User no longer exist')
 
-        if not user.verified:
-            raise NotVerified('You are not verified')
-
     except Exception as e:
         error = e.__class__.__name__
         print(error)
@@ -57,9 +53,6 @@ def require_user(db: Session = Depends(get_db), Authorize: AuthJWT = Depends()):
         if error == 'UserNotFound':
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED, detail='User no longer exist')
-        if error == 'NotVerified':
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, detail='Please verify your account')
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail='Token is invalid or has expired')
     return user_id
