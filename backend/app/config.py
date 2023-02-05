@@ -17,8 +17,6 @@ class Settings(BaseSettings):
 
     CLIENT_ORIGIN: str
 
-    VERIFICATION_SECRET: str
-
     class Config:
         env_file = './.env'
 
